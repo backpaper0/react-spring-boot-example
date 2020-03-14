@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
 
 import { CsrfTokenContext } from "./WithCsrfToken";
-import { UserinfoContext } from "./WithUserinfo";
+import { useUserinfo } from "./WithUserinfo";
 import { useHttp } from "./http";
 
 function Login() {
 
-  const [, refreshUserinfo] = useContext(UserinfoContext);
+  const [, refreshUserinfo] = useUserinfo();
   const [, refreshCsrfToken] = useContext(CsrfTokenContext);
 
   const [error, setError] = useState("");

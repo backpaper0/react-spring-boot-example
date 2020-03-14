@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 
 import { CsrfTokenContext } from "./WithCsrfToken";
-import { UserinfoContext } from "./WithUserinfo";
+import { useUserinfo } from "./WithUserinfo";
 import { useHttp } from "./http";
 
 function Home() {
-  const [userinfo, refreshUserinfo] = useContext(UserinfoContext);
+  const [userinfo, refreshUserinfo] = useUserinfo();
   const [, refreshCsrfToken] = useContext(CsrfTokenContext);
   const http = useHttp();
   const logout: React.MouseEventHandler<HTMLButtonElement> = event => {

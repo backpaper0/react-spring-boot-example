@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { UserinfoContext } from "./WithUserinfo";
+import { useUserinfo } from "./WithUserinfo";
 import Login from "./Login";
 
 export interface AuthenticationProps {
@@ -9,7 +9,7 @@ export interface AuthenticationProps {
 
 function Authentication({ children }: AuthenticationProps) {
 
-  const [userinfo] = useContext(UserinfoContext);
+  const [userinfo] = useUserinfo();
 
   if (userinfo.name === "") {
     return (

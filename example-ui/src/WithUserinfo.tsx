@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 
 import { useHttp } from "./http";
 import { useInit } from "./hooks";
@@ -10,7 +10,7 @@ export interface Userinfo {
 
 const defaultUserinfo = () => ({ name: "", authorities: [] });
 
-export const UserinfoContext = React.createContext<[Userinfo, () => void]>([defaultUserinfo(), () => Promise.resolve()]);
+const UserinfoContext = React.createContext<[Userinfo, () => void]>([defaultUserinfo(), () => Promise.resolve()]);
 
 interface WithUserinfoProps {
   children: React.ReactNode;
@@ -40,3 +40,6 @@ function WithUserinfo({ children, initialized }: WithUserinfoProps) {
 
 export default WithUserinfo;
 
+export function useUserinfo() {
+  return useContext(UserinfoContext);
+}
