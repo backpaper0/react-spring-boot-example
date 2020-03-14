@@ -1,13 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 
-import { CsrfTokenContext } from "./WithCsrfToken";
+import { useCsrfToken } from "./WithCsrfToken";
 import { useUserinfo } from "./WithUserinfo";
 import { useHttp } from "./http";
 
 function Login() {
 
   const [, refreshUserinfo] = useUserinfo();
-  const [, refreshCsrfToken] = useContext(CsrfTokenContext);
+  const [, refreshCsrfToken] = useCsrfToken();
 
   const [error, setError] = useState("");
   const [form, setForm] = useState({ username: "", password: "" });

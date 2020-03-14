@@ -1,9 +1,9 @@
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 
-import { CsrfTokenContext, CsrfToken } from "./WithCsrfToken";
+import { useCsrfToken, CsrfToken } from "./WithCsrfToken";
 
 export function useHttp() {
-  const [csrfToken] = useContext(CsrfTokenContext);
+  const [csrfToken] = useCsrfToken();
   const http = useMemo(() => new HttpClient(csrfToken), [csrfToken]);
   return http;
 }

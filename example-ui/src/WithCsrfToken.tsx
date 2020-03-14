@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 
 import { useHttp } from "./http";
 import { useInit } from "./hooks";
@@ -11,7 +11,7 @@ export interface CsrfToken {
 
 const defaultCsrfToken = () => ({ headerName: "", parameterName: "", token: "" });
 
-export const CsrfTokenContext = React.createContext<[CsrfToken, () => void]>([defaultCsrfToken(), () => Promise.resolve()]);
+const CsrfTokenContext = React.createContext<[CsrfToken, () => void]>([defaultCsrfToken(), () => Promise.resolve()]);
 
 interface WithCsrfTokenProps {
   children: React.ReactNode;
@@ -40,4 +40,8 @@ function WithCsrfToken({ children, initialized }: WithCsrfTokenProps) {
 }
 
 export default WithCsrfToken;
+
+export function useCsrfToken() {
+  return useContext(CsrfTokenContext);
+}
 

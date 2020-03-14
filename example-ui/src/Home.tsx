@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { CsrfTokenContext } from "./WithCsrfToken";
+import { useCsrfToken } from "./WithCsrfToken";
 import { useUserinfo } from "./WithUserinfo";
 import { useHttp } from "./http";
 
 function Home() {
   const [userinfo, refreshUserinfo] = useUserinfo();
-  const [, refreshCsrfToken] = useContext(CsrfTokenContext);
+  const [, refreshCsrfToken] = useCsrfToken();
   const http = useHttp();
   const logout: React.MouseEventHandler<HTMLButtonElement> = event => {
     http.postForm("/api/logout", {}).then(() => {
