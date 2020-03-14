@@ -8,15 +8,13 @@ import Home from "./Home";
 
 function App() {
 
-  const [initCsrfToken, setInitCsrfToken] = useState(false);
-  const [initUserinfo, setInitUserinfo] = useState(false);
-  const initializedCsrfToken = useCallback(() => setInitCsrfToken(true), []);
-  const initializedUserinfo = useCallback(() => setInitUserinfo(true), []);
-  const loaded = initCsrfToken && initUserinfo;
+  const [count, setCount] = useState(2);
+  const initialized = useCallback(() => setCount(count => count - 1), []);
+  const loaded = count === 0;
 
   return (
-    <WithCsrfToken initialized={initializedCsrfToken}>
-    <WithUserinfo initialized={initializedUserinfo}>
+    <WithCsrfToken initialized={initialized}>
+    <WithUserinfo initialized={initialized}>
       <Loading loaded={loaded}>
         <Authentication>
           <Home/>
