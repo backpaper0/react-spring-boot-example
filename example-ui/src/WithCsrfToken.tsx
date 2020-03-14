@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
 import { useHttp } from "./http";
+import { useInit } from "./hooks";
 
 export interface CsrfToken {
   headerName: string;
@@ -19,7 +20,6 @@ interface WithCsrfTokenProps {
 
 function WithCsrfToken({ children, initialized }: WithCsrfTokenProps) {
 
-  const [first, setFirst] = useState(true);
   const [csrfToken, setCsrfToken] = useState(defaultCsrfToken);
 
   const http = useHttp();
@@ -28,10 +28,9 @@ function WithCsrfToken({ children, initialized }: WithCsrfTokenProps) {
     return http.get("/api/csrf_token").then(setCsrfToken);
   }, [http]);
 
-  if (first) {
-    setFirst(false);
+  useInit(() => {
     refreshCsrfToken().then(initialized);
-  }
+  });
 
   return (
     <CsrfTokenContext.Provider value={[csrfToken, refreshCsrfToken]}>

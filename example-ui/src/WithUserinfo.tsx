@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
 import { useHttp } from "./http";
+import { useInit } from "./hooks";
 
 export interface Userinfo {
   name: string;
@@ -18,7 +19,6 @@ interface WithUserinfoProps {
 
 function WithUserinfo({ children, initialized }: WithUserinfoProps) {
 
-  const [first, setFirst] = useState(true);
   const [userinfo, setUserinfo] = useState(defaultUserinfo);
 
   const http = useHttp();
@@ -27,12 +27,9 @@ function WithUserinfo({ children, initialized }: WithUserinfoProps) {
     return http.get("/api/userinfo").catch(e => defaultUserinfo()).then(setUserinfo);
   }, [http]);
 
-  if (first) {
-    setFirst(false);
-    refreshUserinfo().then(() => {
-      initialized();
-    });
-  }
+  useInit(() => {
+    refreshUserinfo().then(initialized);
+  });
 
   return (
     <UserinfoContext.Provider value={[userinfo, refreshUserinfo]}>
