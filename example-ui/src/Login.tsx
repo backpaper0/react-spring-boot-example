@@ -10,26 +10,20 @@ function Login() {
   const [csrfToken, refreshCsrfToken] = useContext(CsrfTokenContext);
 
   const [error, setError] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({ username: "", password: "" });
 
   const http = useHttp();
 
-  const updateUsername = useCallback(event => {
+  const updateForm = useCallback(event => {
+    const { name, value } = event.target;
     setError("");
-    setUsername(event.target.value);
+    setForm(form => ({ ...form, [name]: value }));
   }, []);
-  const updatePassword = useCallback(event => {
-    setError("");
-    setPassword(event.target.value);
-  }, []);
+
   const submit = useCallback(event => {
     event.preventDefault();
     setError("");
-    http.postForm("/api/login", {
-      username,
-      password
-    }).then(resp => {
+    http.postForm("/api/login", form).then(resp => {
       return Promise.all([
         refreshUserinfo(),
         refreshCsrfToken()
@@ -37,12 +31,12 @@ function Login() {
     }).catch(e => {
       setError(e.statusText);
     });
-  }, [error, username, password, http]);
+  }, [error, form, http]);
   return (
     <form onSubmit={submit}>
       <p>{error}</p>
-      <p><input type="text" name="username" onChange={updateUsername} autoFocus={true}/></p>
-      <p><input type="password" name="password" onChange={updatePassword}/></p>
+      <p><input type="text" name="username" onChange={updateForm} autoFocus={true}/></p>
+      <p><input type="password" name="password" onChange={updateForm}/></p>
       <p><button type="submit">Login</button></p>
     </form>
   );
