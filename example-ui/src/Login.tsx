@@ -2,6 +2,7 @@ import React, { useState, useContext, useCallback } from 'react';
 
 import { CsrfTokenContext } from "./WithCsrfToken";
 import { UserinfoContext } from "./WithUserinfo";
+import { useHttp } from "./http";
 
 function Login() {
 
@@ -11,6 +12,8 @@ function Login() {
   const [error, setError] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const http = useHttp();
 
   const updateUsername = useCallback(event => {
     setError("");
@@ -23,28 +26,18 @@ function Login() {
   const submit = useCallback(event => {
     event.preventDefault();
     setError("");
-    fetch("/api/login", {
-      method: "POST",
-      headers: {
-        [csrfToken.headerName]: csrfToken.token,
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: new URLSearchParams({
-        username,
-        password
-      })
+    http.postForm("/api/login", {
+      username,
+      password
     }).then(resp => {
-      if (resp.ok) {
-        return Promise.all([
-          refreshUserinfo(),
-          refreshCsrfToken()
-        ]);
-      }
-      throw resp.statusText;
+      return Promise.all([
+        refreshUserinfo(),
+        refreshCsrfToken()
+      ]);
     }).catch(e => {
-      setError(e);
+      setError(e.statusText);
     });
-  }, [error, username, password, csrfToken]);
+  }, [error, username, password, http]);
   return (
     <form onSubmit={submit}>
       <p>{error}</p>

@@ -1,5 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
+import { useHttp } from "./http";
+
 export interface Userinfo {
   name: string;
   authorities: string[];
@@ -17,11 +19,12 @@ interface WithUserinfoProps {
 function WithUserinfo({ children, initialized }: WithUserinfoProps) {
 
   const [first, setFirst] = useState(true);
-
   const [userinfo, setUserinfo] = useState(defaultUserinfo);
 
+  const http = useHttp();
+
   const refreshUserinfo = useCallback(() => {
-    return fetch("/api/userinfo").then(a => a.json()).catch(e => defaultUserinfo()).then(setUserinfo);
+    return http.get("/api/userinfo").catch(e => defaultUserinfo()).then(setUserinfo);
   }, []);
 
   if (first) {

@@ -2,18 +2,14 @@ import React, { useState, useContext, useCallback } from 'react';
 
 import { CsrfTokenContext } from "./WithCsrfToken";
 import { UserinfoContext } from "./WithUserinfo";
+import { useHttp } from "./http";
 
 function Home() {
   const [userinfo, refreshUserinfo] = useContext(UserinfoContext);
   const [csrfToken, refreshCsrfToken] = useContext(CsrfTokenContext);
+  const http = useHttp();
   const logout = useCallback(() => {
-    fetch("/api/logout", {
-      method: "POST",
-      headers: {
-        [csrfToken.headerName]: csrfToken.token,
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    }).then(() => {
+    http.postForm("/api/logout", {}).then(() => {
       refreshUserinfo();
       refreshCsrfToken();
     });
