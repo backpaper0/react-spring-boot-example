@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { CsrfTokenContext } from "./WithCsrfToken";
 import { UserinfoContext } from "./WithUserinfo";
@@ -6,21 +6,21 @@ import { useHttp } from "./http";
 
 function Login() {
 
-  const [userinfo, refreshUserinfo] = useContext(UserinfoContext);
-  const [csrfToken, refreshCsrfToken] = useContext(CsrfTokenContext);
+  const [, refreshUserinfo] = useContext(UserinfoContext);
+  const [, refreshCsrfToken] = useContext(CsrfTokenContext);
 
   const [error, setError] = useState("");
   const [form, setForm] = useState({ username: "", password: "" });
 
   const http = useHttp();
 
-  const updateForm = useCallback(event => {
+  const updateForm: React.ChangeEventHandler<HTMLInputElement> = event => {
     const { name, value } = event.target;
     setError("");
     setForm(form => ({ ...form, [name]: value }));
-  }, []);
+  };
 
-  const submit = useCallback(event => {
+  const submit: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
     setError("");
     http.postForm("/api/login", form).then(resp => {
@@ -31,7 +31,7 @@ function Login() {
     }).catch(e => {
       setError(e.statusText);
     });
-  }, [error, form, http]);
+  };
   return (
     <form onSubmit={submit}>
       <p>{error}</p>

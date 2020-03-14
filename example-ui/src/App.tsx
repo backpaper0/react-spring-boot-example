@@ -1,7 +1,7 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
-import WithCsrfToken, { CsrfTokenContext } from "./WithCsrfToken";
-import WithUserinfo, { UserinfoContext } from "./WithUserinfo";
+import WithCsrfToken from "./WithCsrfToken";
+import WithUserinfo from "./WithUserinfo";
 import Loading from "./Loading";
 import Authentication from "./Authentication";
 import Home from "./Home";

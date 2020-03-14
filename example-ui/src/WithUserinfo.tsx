@@ -25,7 +25,7 @@ function WithUserinfo({ children, initialized }: WithUserinfoProps) {
 
   const refreshUserinfo = useCallback(() => {
     return http.get("/api/userinfo").catch(e => defaultUserinfo()).then(setUserinfo);
-  }, []);
+  }, [http]);
 
   if (first) {
     setFirst(false);

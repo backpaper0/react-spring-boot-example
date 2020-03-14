@@ -26,7 +26,7 @@ function WithCsrfToken({ children, initialized }: WithCsrfTokenProps) {
 
   const refreshCsrfToken = useCallback(() => {
     return http.get("/api/csrf_token").then(setCsrfToken);
-  }, []);
+  }, [http]);
 
   if (first) {
     setFirst(false);

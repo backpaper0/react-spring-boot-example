@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useContext } from 'react';
 
 import { CsrfTokenContext } from "./WithCsrfToken";
 import { UserinfoContext } from "./WithUserinfo";
@@ -6,14 +6,14 @@ import { useHttp } from "./http";
 
 function Home() {
   const [userinfo, refreshUserinfo] = useContext(UserinfoContext);
-  const [csrfToken, refreshCsrfToken] = useContext(CsrfTokenContext);
+  const [, refreshCsrfToken] = useContext(CsrfTokenContext);
   const http = useHttp();
-  const logout = useCallback(() => {
+  const logout: React.MouseEventHandler<HTMLButtonElement> = event => {
     http.postForm("/api/logout", {}).then(() => {
       refreshUserinfo();
       refreshCsrfToken();
     });
-  }, [csrfToken]);
+  };
   return (
     <div className="App">
       <h1>Hello, {userinfo.name}!</h1>
