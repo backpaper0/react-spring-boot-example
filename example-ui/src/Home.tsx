@@ -8,11 +8,10 @@ function Home() {
   const [userinfo, refreshUserinfo] = useUserinfo();
   const [, refreshCsrfToken] = useCsrfToken();
   const http = useHttp();
-  const logout: React.MouseEventHandler<HTMLButtonElement> = event => {
-    http.postForm("/api/logout", {}).then(() => {
-      refreshUserinfo();
-      refreshCsrfToken();
-    });
+  const logout: React.MouseEventHandler<HTMLButtonElement> = async event => {
+    await http.postForm("/api/logout", {});
+    refreshUserinfo();
+    refreshCsrfToken();
   };
   return (
     <div className="App">

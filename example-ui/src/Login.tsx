@@ -20,17 +20,16 @@ function Login() {
     setForm(form => ({ ...form, [name]: value }));
   };
 
-  const submit: React.FormEventHandler<HTMLFormElement> = event => {
+  const submit: React.FormEventHandler<HTMLFormElement> = async event => {
     event.preventDefault();
     setError("");
-    http.postForm("/api/login", form).then(resp => {
-      return Promise.all([
-        refreshUserinfo(),
-        refreshCsrfToken()
-      ]);
-    }).catch(e => {
+    try {
+      await http.postForm("/api/login", form);
+      refreshUserinfo();
+      refreshCsrfToken();
+    } catch(e) {
       setError(e.statusText);
-    });
+    }
   };
   return (
     <form onSubmit={submit}>
