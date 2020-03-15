@@ -37,7 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/api/csrf_token").permitAll()
 
-                .anyRequest().authenticated()
+                .antMatchers("/api/**").authenticated()
+
+                .anyRequest().permitAll()
 
                 .and().formLogin()
                 .loginProcessingUrl("/api/login")
