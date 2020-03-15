@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.example.api.API;
 
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
+public class PathPrefixConfig implements WebMvcConfigurer {
 
     @Override
     public void configurePathMatch(final PathMatchConfigurer configurer) {
