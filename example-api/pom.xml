@@ -103,7 +103,7 @@
 									<goal>yarn</goal>
 								</goals>
 								<configuration>
-									<rontend.yarn.arguments>install</rontend.yarn.arguments>
+									<frontend.yarn.arguments>install</frontend.yarn.arguments>
 								</configuration>
 							</execution>
 							<execution>
@@ -113,7 +113,7 @@
 									<goal>yarn</goal>
 								</goals>
 								<configuration>
-									<rontend.yarn.arguments>build</rontend.yarn.arguments>
+									<frontend.yarn.arguments>build</frontend.yarn.arguments>
 								</configuration>
 							</execution>
 						</executions>
