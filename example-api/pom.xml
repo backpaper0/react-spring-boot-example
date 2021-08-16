@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.6.RELEASE</version>
+		<version>2.5.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -48,12 +47,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -73,34 +66,30 @@
 
 	<profiles>
 		<profile>
-			<id>default-profile</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
+			<id>bundle-ui</id>
 			<build>
 				<plugins>
 					<plugin>
 						<groupId>com.github.eirslett</groupId>
 						<artifactId>frontend-maven-plugin</artifactId>
-						<version>1.9.1</version>
+						<version>1.12.0</version>
 						<configuration>
 							<workingDirectory>../example-ui</workingDirectory>
-							<yarnVersion>v1.22.4</yarnVersion>
-							<nodeVersion>v13.9.0</nodeVersion>
+							<nodeVersion>v14.17.5</nodeVersion>
 						</configuration>
 						<executions>
 							<execution>
-								<id>install-node-and-yarn</id>
+								<id>install-node-and-npm</id>
 								<phase>generate-resources</phase>
 								<goals>
-									<goal>install-node-and-yarn</goal>
+									<goal>install-node-and-npm</goal>
 								</goals>
 							</execution>
 							<execution>
-								<id>yarn-install</id>
+								<id>npm-install</id>
 								<phase>generate-resources</phase>
 								<goals>
-									<goal>yarn</goal>
+									<goal>npm</goal>
 								</goals>
 								<configuration>
 									<arguments>install</arguments>
@@ -110,10 +99,10 @@
 								<id>yarn-build</id>
 								<phase>generate-resources</phase>
 								<goals>
-									<goal>yarn</goal>
+									<goal>npm</goal>
 								</goals>
 								<configuration>
-									<arguments>build</arguments>
+									<arguments>run build</arguments>
 								</configuration>
 							</execution>
 						</executions>
@@ -143,6 +132,9 @@
 		</profile>
 		<profile>
 			<id>api-only</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 		</profile>
 	</profiles>
 </project>

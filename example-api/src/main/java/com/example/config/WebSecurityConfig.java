@@ -13,46 +13,45 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService userDetailsService;
+	private final UserDetailsService userDetailsService;
 
-    public WebSecurityConfig(final UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
+	public WebSecurityConfig(final UserDetailsService userDetailsService) {
+		this.userDetailsService = userDetailsService;
+	}
 
-    @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
-    }
+	@Override
+	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService);
+	}
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
-    @Override
-    protected void configure(final HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
+	@Override
+	protected void configure(final HttpSecurity http) throws Exception {
+		http
+				.authorizeRequests(authorizeRequests -> authorizeRequests
+						.antMatchers("/api/csrf_token").permitAll()
 
-                .antMatchers("/api/csrf_token").permitAll()
+						.antMatchers("/api/**").authenticated()
 
-                .antMatchers("/api/**").authenticated()
+						.anyRequest().permitAll())
 
-                .anyRequest().permitAll()
+				.formLogin(formLogin -> formLogin
+						.loginProcessingUrl("/api/login")
+						.successHandler((req, res, auth) -> res.setStatus(HttpStatus.NO_CONTENT.value()))
+						.failureHandler((req, res, e) -> res.setStatus(HttpStatus.UNAUTHORIZED.value())))
 
-                .and().formLogin()
-                .loginProcessingUrl("/api/login")
-                .successHandler((req, res, auth) -> res.setStatus(HttpStatus.NO_CONTENT.value()))
-                .failureHandler((req, res, e) -> res.setStatus(HttpStatus.UNAUTHORIZED.value()))
+				.logout(logout -> logout
+						.logoutUrl("/api/logout")
+						.logoutSuccessHandler(
+								(req, res, auth) -> res.setStatus(HttpStatus.NO_CONTENT.value())))
 
-                .and().logout()
-                .logoutUrl("/api/logout")
-                .logoutSuccessHandler(
-                        (req, res, auth) -> res.setStatus(HttpStatus.NO_CONTENT.value()))
-
-                .and().exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                .accessDeniedHandler((req, res, e) -> res.setStatus(HttpStatus.FORBIDDEN.value()));
-    }
+				.exceptionHandling(exceptionHandling -> exceptionHandling
+						.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+						.accessDeniedHandler((req, res, e) -> res.setStatus(HttpStatus.FORBIDDEN.value())));
+	}
 }
