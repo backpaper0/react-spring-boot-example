@@ -27,7 +27,7 @@ function Login() {
       await http.postForm("/api/login", form);
       refreshUserinfo();
       refreshCsrfToken();
-    } catch(e) {
+    } catch(e: any) {
       setError(e.statusText);
     }
   };

@@ -1,18 +1,55 @@
 # react-spring-boot-example
 
-## SpringのProfile
+## npmとMavenで動かす
 
-WIP
+### UI
 
-`default`プロファイルでデバッグログが出るようにしている。
+```sh
+cd example-ui
+```
 
-ステージングや本番ではプロファイルを変える。
+```sh
+npm install
+```
 
-## frontend-maven-plugin
+```sh
+npm start
+```
 
-WIP
+### API
 
-APIのみのJARを作るProfile(SpringではなくMaven)の用意している。
+```sh
+cd example-api
+```
+
+```sh
+mvn spring-boot:run
+```
+
+## 実行可能JARで動かす
+
+### ビルド
+
+```sh
+mvn -Pbundle-ui -f example-api package
+```
+
+### 実行
+
+```sh
+java -jar example-api/target/example-api-0.0.1-SNAPSHOT.jar
+```
+
+## 動作確認
+
+Webブラウザで http://localhost:8080 を開く。
+(npmとMavenで動かしている場合は http://localhost:3000 )
+
+次のユーザーでログインできる。
+
+|ユーザー名|パスワード|
+|---|---|
+|`demo`|`secret`|
 
 ## TODO
 

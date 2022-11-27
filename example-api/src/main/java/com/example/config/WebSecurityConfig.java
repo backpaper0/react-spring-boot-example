@@ -13,10 +13,10 @@ public class WebSecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
-				.authorizeRequests(authorizeRequests -> authorizeRequests
-						.antMatchers("/api/csrf_token").permitAll()
+				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+						.requestMatchers("/api/csrf_token").permitAll()
 
-						.antMatchers("/api/**").authenticated()
+						.requestMatchers("/api/**").authenticated()
 
 						.anyRequest().permitAll())
 
