@@ -18,9 +18,13 @@ public class SseAPI {
 	}
 
 	@PostMapping
-	public SseEmitter sse(@RequestParam(required = false, defaultValue = "10") long delay) {
+	public SseEmitter sse(@RequestParam(required = false, defaultValue = "10") long delay,
+			@RequestParam(required = false, defaultValue = "none") String error) {
+		if (error.equals("controller")) {
+			throw new RuntimeException("コントローラーでエラー");
+		}
 		SseEmitter sseEmitter = new SseEmitter();
-		sseService.sse(sseEmitter, delay);
+		sseService.sse(sseEmitter, delay, error);
 		return sseEmitter;
 	}
 }

@@ -27,17 +27,23 @@ function Login() {
       await http.postForm("/api/login", form);
       refreshUserinfo();
       refreshCsrfToken();
-    } catch(e: any) {
+    } catch (e: any) {
       setError(e.statusText);
     }
   };
   return (
-    <form onSubmit={submit}>
-      <p>{error}</p>
-      <p><input type="text" name="username" onChange={updateForm} autoFocus={true}/></p>
-      <p><input type="password" name="password" onChange={updateForm}/></p>
-      <p><button type="submit">Login</button></p>
-    </form>
+    <div className='container py-3'>
+      <div className='row'>
+        <div className='col-4 offset-md-4'>
+          <form onSubmit={submit}>
+            <p>{error}</p>
+            <p><input className='form-control' type="text" name="username" onChange={updateForm} autoFocus={true} /></p>
+            <p><input className='form-control' type="password" name="password" onChange={updateForm} /></p>
+            <p><button className='btn btn-primary' type="submit">Login</button></p>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
 
