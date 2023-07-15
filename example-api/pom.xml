@@ -109,20 +109,22 @@
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-antrun-plugin</artifactId>
+						<artifactId>maven-resources-plugin</artifactId>
 						<executions>
 							<execution>
 								<id>copy-built-ui-to-static-directory</id>
 								<phase>process-resources</phase>
 								<goals>
-									<goal>run</goal>
+									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
-									<target>
-										<copy todir="./target/classes/static">
-											<fileset dir="../example-ui/dist" />
-										</copy>
-									</target>
+									<outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
+									<resources>
+										<resource>
+											<directory>../example-ui/dist</directory>
+											<filtering>false</filtering>
+										</resource>
+									</resources>
 								</configuration>
 							</execution>
 						</executions>
