@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
-import WithCsrfToken from "./WithCsrfToken";
-import WithUserinfo from "./WithUserinfo";
-import Loading from "./Loading";
 import Authentication from "./Authentication";
 import Home from "./Home";
+import Loading from "./Loading";
+import WithCsrfToken from "./WithCsrfToken";
+import WithUserinfo from "./WithUserinfo";
 
 function App() {
 
@@ -14,13 +14,13 @@ function App() {
 
   return (
     <WithCsrfToken initialized={initialized}>
-    <WithUserinfo initialized={initialized}>
-      <Loading loaded={loaded}>
-        <Authentication>
-          <Home/>
-        </Authentication>
-      </Loading>
-    </WithUserinfo>
+      <WithUserinfo initialized={initialized}>
+        <Loading loaded={loaded}>
+          <Authentication>
+            <Home />
+          </Authentication>
+        </Loading>
+      </WithUserinfo>
     </WithCsrfToken>
   );
 }

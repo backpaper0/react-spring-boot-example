@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 
-import { useHttp } from "./http";
 import { useInit } from "./hooks";
+import { useHttp } from "./http";
 
 export interface Userinfo {
   name: string;
@@ -24,7 +24,7 @@ function WithUserinfo({ children, initialized }: WithUserinfoProps) {
   const http = useHttp();
 
   const refreshUserinfo = useCallback(() => {
-    return http.get("/api/userinfo").catch(e => defaultUserinfo()).then(setUserinfo);
+    return http.get("/api/userinfo").catch(() => defaultUserinfo()).then(setUserinfo);
   }, [http]);
 
   useInit(() => {

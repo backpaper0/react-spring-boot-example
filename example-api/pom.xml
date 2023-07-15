@@ -120,7 +120,7 @@
 								<configuration>
 									<target>
 										<copy todir="./target/classes/static">
-											<fileset dir="../example-ui/build" />
+											<fileset dir="../example-ui/dist" />
 										</copy>
 									</target>
 								</configuration>

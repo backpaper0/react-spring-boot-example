@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { useCsrfToken, CsrfToken } from "./WithCsrfToken";
+import { CsrfToken, useCsrfToken } from "./WithCsrfToken";
 
 export function useHttp() {
   const [csrfToken] = useCsrfToken();

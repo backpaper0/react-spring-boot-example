@@ -2,7 +2,6 @@ import { FormEventHandler, useState } from 'react';
 
 import { EventStreamContentType, fetchEventSource } from '@microsoft/fetch-event-source';
 import { useCsrfToken } from "./WithCsrfToken";
-import { setEnvironmentData } from 'worker_threads';
 
 function ServerSentEvents() {
   const [csrfToken] = useCsrfToken();

@@ -1,15 +1,15 @@
 import React from 'react';
 
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useCsrfToken } from "./WithCsrfToken";
 import { useUserinfo } from "./WithUserinfo";
 import { useHttp } from "./http";
-import { Link, Outlet, useLocation, useNavigation } from 'react-router-dom';
 
 function Home() {
   const [userinfo, refreshUserinfo] = useUserinfo();
   const [, refreshCsrfToken] = useCsrfToken();
   const http = useHttp();
-  const logout: React.MouseEventHandler<HTMLButtonElement> = async event => {
+  const logout: React.MouseEventHandler<HTMLButtonElement> = async () => {
     await http.postForm("/api/logout", {});
     refreshUserinfo();
     refreshCsrfToken();

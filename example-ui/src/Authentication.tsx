@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useUserinfo } from "./WithUserinfo";
 import Login from "./Login";
+import { useUserinfo } from "./WithUserinfo";
 
 export interface AuthenticationProps {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ function Authentication({ children }: AuthenticationProps) {
 
   if (userinfo.name === "") {
     return (
-      <Login/>
+      <Login />
     );
   }
 
